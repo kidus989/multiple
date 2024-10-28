@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Multiple Lunix</title>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+            body {
+                font-family: 'Poppins', sans-serif;
+                background: linear-gradient(135deg, #000428, #004e92);
+                color: #ffffff;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                height: 100vh;
+                overflow: hidden;
+            }
+
+            h1 {
+                font-size: 45px;
+                font-weight: 500;
+                text-align: center;
+                margin-top: 18px;
+                color: #00ff9d;
+                text-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
+                animation: fadeIn 2s ease-in-out;
+                position: absolute;
+                top: 2px;
+                left: 1rem;
+            }
+
+            .box {
+                display: flex;
+                justify-content: center;
+                margin-top: 20px;
+                animation: slideIn 1.5s ease-out;
+                top: 2px;
+            }
+
+            .box a {
+                color: #00ff9d;
+                text-decoration: none;
+                font-size: 20px;
+                margin: 0 15px;
+                padding: 10px 20px;
+                border-radius: 5px;
+                background: rgba(0, 255, 157, 0.1);
+                transition: background-color 0.3s ease, transform 0.3s ease;
+            }
+
+            .box a:hover {
+                background-color: #00ff9d;
+                color: #000;
+                transform: translateY(-5px);
+            }
+
+            #container {
+                display: flex;
+                flex: 1;
+                padding: 20px;
+                animation: fadeInUp 1.5s ease-out;
+            }
+
+            #sidebar {
+                width: 300px;
+                background-color: rgba(255, 255, 255, 0.1);
+                padding: 20px;
+                border-right: 2px solid #00ff9d;
+                box-shadow: 0 0 10px rgba(0, 255, 157, 0.3);
+                overflow-y: auto;
+            }
+
+            #sidebar button {
+                display: block;
+                width: 100%;
+                padding: 15px;
+                margin-bottom: 20px;
+                font-size: 16px;
+                color: #000;
+                background-color: #00ff9d;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+            #sidebar button:hover {
+                background-color: #00e089;
+            }
+
+            #main {
+                flex: 1;
+                background-color: rgba(255, 255, 255, 0.1);
+                padding: 20px;
+                border-left: 2px solid #00ff9d;
+                display: flex;
+                flex-direction: column;
+                position: relative;
+                animation: fadeInUp 2s ease;
+            }
+
+            #note-content {
+                width: 790px;
+                height: 450px;
+                border-radius: 6px;
+                border: 1px solid #00ff9d;
+                background-color: transparent;
+                color: #ffffff;
+                padding: 15px;
+                font-size: 16px;
+                resize: none;
+                box-shadow: 0 0 10px rgba(0, 255, 157, 0.2);
+                animation: fadeIn 2.5s ease;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            #actions {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 20px;
+            }
+
+            #actions button {
+                padding: 10px 20px;
+                font-size: 16px;
+                background-color: transparent;
+                color: #00ff9d;
+                border: 2px solid transparent;  
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s ease, color 0.3s ease;
+            }
+
+            #actions button:hover {
+                background-color: #00ff9d;
+                color: #000;
+            }
+
+            /* Animations */
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+
+            @keyframes fadeInUp {
+                from {
+                    transform: translateY(20px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+
+            @keyframes slideIn {
+                from {
+                    transform: translateX(-50px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Multiple Linux</h1>
+        <div class="box">
+            <a href="main page.html">Home</a>
+            <a href="code.html">Code</a>
+            <a href="note.html">Note</a>
+            <a href="extrack.html">Extract</a>
+            <a href="frontpage.html">Back</a>
+        </div>
+        <div id="container">
+            <div id="sidebar">
+                <button id="new-folder">New Folder</button>
+                <button id="toggle-folders">Hide Folders</button>
+                <div id="folder-container">
+                    <h3>Folders</h3>
+                    <ul id="folders"></ul>
+                </div>
+                <h3>Notes</h3>
+                <ul id="notes-list"></ul>
+            </div>
+            <div id="main">
+                <textarea id="note-content" placeholder="Write your note here..."></textarea>
+                <div id="actions">
+                    <button id="save-note">Save Note</button>
+                    <button id="delete-note">Delete Note</button>
+                    <!-- Exit Fullscreen button -->
+                    <button id="exit-fullscreen-btn">Exit Fullscreen</button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Automatically enter fullscreen mode on load
+            document.addEventListener('DOMContentLoaded', () => {
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen();
+                }
+
+                document.getElementById('exit-fullscreen-btn').addEventListener('click', () => {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

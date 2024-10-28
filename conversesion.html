@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiple Lunix</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg,#000000, #004d00);
+            color: #00ff00;
+            border-radius: 5px;
+        }
+        #chat-container {
+            width: 90%;
+            max-width: 600px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #00ff00;
+            border-radius: 8px;
+            box-shadow: 0 0 15px #00ff00;
+            overflow: hidden;
+            padding: 20px;
+        }
+        #messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            border-bottom: 1px solid #00ff00;
+            margin-bottom: 20px;
+        }
+        #input-container {
+            display: flex;
+            justify-content: space-between;
+        }
+        #user-input {
+            flex: 1;
+            border: none;
+            padding: 15px;
+            font-size: 16px;
+            background-color: transparent;
+            color: #00ff00;
+            border: 2px solid #00ff00;
+        }
+        #send-button, #voice-button {
+            border: none;
+            padding: 15px;
+            margin-left: 10px;
+            background-color: #00ff00;
+            color: black;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+        #send-button:hover, #voice-button:hover {
+            background-color: #00cc00;
+            box-shadow: 0 0 10px #00cc00;
+        }
+        .message {
+            margin-bottom: 10px;
+        }
+        .message.user {
+            text-align: right;
+        }
+        a{
+            position: absolute;
+            top: 20px;
+            left: 3rem;
+            color: #004d00;
+            font-size: 28px;
+            text-decoration: none;
+        }
+        a:hover{
+            transform: scale(1.5s);
+            font-size: 30px;
+            color: #00cc00;
+        }
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 36px;
+            }
+            .nav {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome Back!!!</h1>
+    <p><a href="main page.html">Back</a></p>
+    <div id="chat-container">
+        <div id="messages"></div>
+        <div id="input-container">
+            <input type="text" id="user-input" placeholder="Type your message here..."/>
+            <button id="send-button">Send</button>
+            <button id="voice-button">🎤</button>
+        </div>
+    </div>
+
+    <script>
+        // Handling text input
+        document.getElementById('send-button').addEventListener('click', function() {
+            var userInput = document.getElementById('user-input').value;
+            if (userInput.trim() !== '') {
+                addMessage('user', userInput);
+                document.getElementById('user-input').value = '';
+                generateResponse(userInput);
+            }
+        });
+
+        // Adding voice recognition
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript;
+            addMessage('user', transcript);
+            generateResponse(transcript);
+        };
+        recognition.onerror = (event) => {
+            console.error(event.error);
+        };
+
+        document.getElementById('voice-button').addEventListener('click', () => {
+            recognition.start();
+        });
+
+        function addMessage(sender, text) {
+            var messageElement = document.createElement('div');
+            messageElement.classList.add('message', sender);
+            messageElement.textContent = text;
+            document.getElementById('messages').appendChild(messageElement);
+            document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
+        }
+
+        function generateResponse(userInput) {
+            var response = '';
+            if (userInput.toLowerCase().includes('hello')) {
+                response = 'Hi! How can I help you today?';
+            } else {
+                response = 'Sorry, I didn\'t understand that.';
+            }
+            if (userInput.toLowerCase().includes('hello')) {
+                response = 'Hi kidus! How can I help you today?';
+            } else if (userInput.toLowerCase().includes('how are you')) {
+                response = 'I\'m just a bot, but I\'m doing great! Thanks for asking.';
+            } else if (userInput.toLowerCase().includes('hi')) {
+                response = 'hi kidus! how are you doing?';  
+            } else if (userInput.toLowerCase().includes('trying to do better')) {
+                response = 'I beleve in you';
+            } else if (userInput.toLowerCase().includes('no')) {
+                response = 'ok if there is anything just let me know';
+            } else if (userInput.toLowerCase().includes('thanks')) {
+                response = 'no problem';
+            } else if (userInput.toLowerCase().includes('this is not kidus')) {
+                response = 'so you are not allowed here';
+            } else if (userInput.toLowerCase().includes('i am not kidus')) {
+                response = 'so you are not allowed here';
+            } else if (userInput.toLowerCase().includes('why')) {
+                response = 'it is what it is';
+            } else if (userInput.toLowerCase().includes('ok')) {
+                response = 'so how can i help you ';
+            } else if (userInput.toLowerCase().includes('k')) {
+                response = 'so how can i help you anyway';
+            } else if (userInput.toLowerCase().includes('who are you')) {
+                response = 'I am a chat bot that created by kidus ';
+            } else if (userInput.toLowerCase().includes('what are you')) {
+                response = 'I am a chat bot that created by kidus ';
+            } else if (userInput.toLowerCase().includes('ok i will go')) {
+                response = 'that is my pleasure';
+            } else if (userInput.toLowerCase().includes('create code editer')) {
+                response = 'i cant create such a thing but you have created an code editor and you saved it in code editor';
+            } else if (userInput.toLowerCase().includes('bye')) {
+                response = 'Goodbye! Have a great day!';
+            } else if (userInput.toLowerCase().includes('who is kidus')) {
+                response = 'kidus is a web developer and web designer';
+            } else if (userInput.toLowerCase().includes('Good bye')) {
+                response = 'Goodbye! Have a great day!';
+            } else if (userInput.toLowerCase().includes('good morning')) {
+                response = 'good morning! how was sleeping';
+            } else if (userInput.toLowerCase().includes('fine')) {
+                response = 'Thats good Can I Help You By Anything Today';
+            } else if (userInput.toLowerCase().includes('good')) {
+                response = 'Thats a good news can i help you by anything today';
+            } else if (userInput.toLowerCase().includes('hey')) {
+                response = 'hey how are you doing';
+            } else if (userInput.toLowerCase().includes('to find icons in html')) {
+                response = 'Go to Icoicons website and you will be able to create icons';
+            } else if (userInput.toLowerCase().includes('to develop websites')) {
+                response = 'There anre so many ways to desigen website but i will give you the easiest way and that is vscode,sublimtext,kalilurixs';
+            } else if (userInput.toLowerCase().includes('hey chad')) {
+                response = 'hey how are you doing';
+            } else if (userInput.toLowerCase().includes('chad')) {
+                response = 'How Can I Help You Today';
+            } else if (userInput.toLowerCase().includes('hi chad')) {
+                response = 'how can i hepl you today';
+            } else if (userInput.toLowerCase().includes('godd morning chad')) {
+                response = 'good morning how can i help you';
+let userInput = "example input"; 
+let response;
+if (userInput.toLowerCase().includes('hello')) {
+    response = 'Hi there! How can I assist you today?';
+} else if (userInput.toLowerCase().includes('how are you')) {
+    response = 'I’m just a program, but I’m here to help you!';
+} else if (userInput.toLowerCase().includes('what is your name')) {
+    response = 'I’m Multiple Lunix, your virtual assistant.';
+} else if (userInput.toLowerCase().includes('tell me a fact')) {
+    response = 'Did you know? Honey never spoils. Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still perfectly edible!';
+} else if (userInput.toLowerCase().includes('i am not kidus')) {
+    response = 'So you are not allowed here.';
+} else if (userInput.toLowerCase().includes('what is the capital of france')) {
+    response = 'The capital of France is Paris.';
+} else if (userInput.toLowerCase().includes('how far is the moon from earth')) {
+    response = 'The average distance from the Earth to the Moon is about 384,400 kilometers (238,855 miles).';
+} else if (userInput.toLowerCase().includes('what is the tallest mountain')) {
+    response = 'The tallest mountain on Earth is Mount Everest, which stands at about 8,848 meters (29,029 feet) above sea level.';
+} else if (userInput.toLowerCase().includes('who invented the lightbulb')) {
+    response = 'Thomas Edison is often credited with inventing the practical lightbulb, though several inventors contributed to its development.';
+} else if (userInput.toLowerCase().includes('what is the largest ocean')) {
+    response = 'The Pacific Ocean is the largest ocean on Earth, covering more than 63 million square miles (165 million square kilometers).';
+} else if (userInput.toLowerCase().includes('what is the speed of light')) {
+    response = 'The speed of light in a vacuum is approximately 299,792 kilometers per second (186,282 miles per second).';
+} else if (userInput.toLowerCase().includes('what is the smallest country')) {
+    response = 'The smallest country in the world by land area is Vatican City, covering about 44 hectares (110 acres).';
+} else if (userInput.toLowerCase().includes('who wrote romeo and juliet')) {
+    response = 'Romeo and Juliet was written by William Shakespeare.';
+} else if (userInput.toLowerCase().includes('what is the largest desert')) {
+    response = 'The largest desert in the world is the Antarctic Desert, covering approximately 14 million square kilometers (5.4 million square miles).';
+} else if (userInput.toLowerCase().includes('who was the first president of the usa')) {
+    response = 'The first President of the United States was George Washington.';
+} else if (userInput.toLowerCase().includes('what is the chemical symbol for gold')) {
+    response = 'The chemical symbol for gold is Au.';
+} else if (userInput.toLowerCase().includes('how many planets are in the solar system')) {
+    response = 'There are eight planets in the Solar System: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, and Neptune.';
+} else if (userInput.toLowerCase().includes('what is the boiling point of water')) {
+    response = 'The boiling point of water at standard atmospheric pressure is 100°C (212°F).';
+} else if (userInput.toLowerCase().includes('what is the longest river')) {
+    response = 'The longest river in the world is the Nile, which is approximately 6,650 kilometers (4,130 miles) long.';
+} else if (userInput.toLowerCase().includes('who painted the mona lisa')) {
+    response = 'The Mona Lisa was painted by Leonardo da Vinci.';
+} else if (userInput.toLowerCase().includes('what is the deepest ocean')) {
+    response = 'The Mariana Trench in the Pacific Ocean is the deepest part of the world’s oceans, with a depth of about 11,034 meters (36,201 feet).';
+} else if (userInput.toLowerCase().includes('what is the largest mammal')) {
+    response = 'The blue whale is the largest mammal and the largest animal ever known to have existed, reaching lengths of up to 30 meters (98 feet) and weighing as much as 200 tons.';
+} else if (userInput.toLowerCase().includes('who discovered penicillin')) {
+    response = 'Penicillin was discovered by Alexander Fleming in 1928.';
+} else if (userInput.toLowerCase().includes('what is the capital of japan')) {
+    response = 'The capital of Japan is Tokyo.';
+} else if (userInput.toLowerCase().includes('who wrote the odyssey')) {
+    response = 'The Odyssey was written by the ancient Greek poet Homer.';
+} else if (userInput.toLowerCase().includes('how many continents are there')) {
+    response = 'There are seven continents: Africa, Antarctica, Asia, Europe, North America, Australia (Oceania), and South America.';
+} else if (userInput.toLowerCase().includes('what is the formula for water')) {
+    response = 'The chemical formula for water is H₂O.';
+} else if (userInput.toLowerCase().includes('what is the main ingredient in bread')) {
+    response = 'The main ingredient in bread is flour.';
+} else if (userInput.toLowerCase().includes('what is the hardest natural substance')) {
+    response = 'The hardest natural substance on Earth is diamond.';
+} else if (userInput.toLowerCase().includes('who was the first human in space')) {
+    response = 'The first human in space was Yuri Gagarin, a Soviet cosmonaut, in 1961.';
+} else if (userInput.toLowerCase().includes('what is the largest planet in the solar system')) {
+    response = 'The largest planet in the Solar System is Jupiter.';
+} else if (userInput.toLowerCase().includes('what is the freezing point of water')) {
+    response = 'The freezing point of water at standard atmospheric pressure is 0°C (32°F).';
+} else if (userInput.toLowerCase().includes('who wrote pride and prejudice')) {
+    response = 'Pride and Prejudice was written by Jane Austen.';
+} else if (userInput.toLowerCase().includes('how long does it take for the earth to orbit the sun')) {
+    response = 'It takes approximately 365.25 days for the Earth to complete one orbit around the Sun.';
+} else if (userInput.toLowerCase().includes('what is the largest animal on land')) {
+    response = 'The African elephant is the largest land animal.';
+} else if (userInput.toLowerCase().includes('what is the capital of canada')) {
+    response = 'The capital of Canada is Ottawa.';
+} else if (userInput.toLowerCase().includes('who invented the telephone')) {
+    response = 'The telephone was invented by Alexander Graham Bell.';
+} else if (userInput.toLowerCase().includes('what is the smallest planet in the solar system')) {
+    response = 'The smallest planet in the Solar System is Mercury.';
+} else if (userInput.toLowerCase().includes('who wrote the illiad')) {
+    response = 'The Iliad was written by the ancient Greek poet Homer.';
+} else if (userInput.toLowerCase().includes('what is the currency of japan')) {
+    response = 'The currency of Japan is the Japanese yen (JPY).';
+} else if (userInput.toLowerCase().includes('what is the most abundant gas in the earth\'s atmosphere')) {
+    response = 'The most abundant gas in the Earth’s atmosphere is nitrogen, making up about 78% of the atmosphere.';
+} else if (userInput.toLowerCase().includes('who was the 16th president of the usa')) {
+    response = 'The 16th President of the United States was Abraham Lincoln.';
+} else if (userInput.toLowerCase().includes('what is the hottest planet in the solar system')) {
+    response = 'The hottest planet in the Solar System is Venus, with surface temperatures around 465°C (869°F).';
+} else if (userInput.toLowerCase().includes('who was the first woman to win a Nobel Prize')) {
+    response = 'Marie Curie was the first woman to win a Nobel Prize, and she won it twice, in Physics (1903) and Chemistry (1911).';
+} else if (userInput.toLowerCase().includes('what is the largest island in the world')) {
+    response = 'The largest island in the world is Greenland.';
+} else if (userInput.toLowerCase().includes('what is the most spoken language in the world')) {
+    response = 'The most spoken language in the world by number of native speakers is Mandarin Chinese.';
+} else if (userInput.toLowerCase().includes('who was the first person to reach the south pole')) {
+    response = 'Roald Amundsen was the first person to reach the South Pole in 1911.';
+} else if (userInput.toLowerCase().includes('what is the largest organ in the human body')) {
+    response = 'The largest organ in the human body is the skin.';
+} else if (userInput.toLowerCase().includes('what is the main ingredient in guacamole')) {
+    response = 'The main ingredient in guacamole is avocado.';
+} else {
+    response = 'I’m not sure how to respond to that. Can you please ask something else?';
+}
+
+console.log(response);
+
+            } else {
+                response = 'Sorry i cant read that';
+            }
+            setTimeout(function() {
+                addMessage('bot', response);
+                speak(response);
+            }, 500);
+        }
+
+        // Adding speech synthesis
+        function speak(text) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            speechSynthesis.speak(utterance);
+        }
+
+        // Optional: Handle Enter key press
+        document.getElementById('user-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                document.getElementById('send-button').click();
+            }
+        });
+    </script>
+</body>
+</html>
+

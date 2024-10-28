@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Terminal</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+            background-color: light green;
+            color: lightgreen;
+            display: flex;
+            flex-direction: row;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Time Counter at the Bottom Right */
+        .time-counter {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 14px;
+            color: lightgreen;
+        }
+
+        /* Left box with color changing buttons */
+        .color-box {
+            width: 25%;
+            background-color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            height: 100vh;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .color-box button {
+            background-color: lightgreen;
+            color: black;
+            border: none;
+            padding: 10px;
+            margin: 10px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        .color-box button:hover {
+            background-color: darkgreen;
+        }
+
+        /* Terminal Styles */
+        .terminal {
+            width: 75%;
+            padding: 20px;
+            color: lightgreen;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .terminal-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .terminal-input {
+            display: flex;
+            align-items: center;
+        }
+
+        .terminal-input span {
+            color: lightgreen;
+        }
+
+        .input-box {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: lightgreen;
+            font-size: 16px;
+            outline: none;
+        }
+
+        /* Animations for background change */
+        .color-transition {
+            transition: background-color 1s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Color Change Box -->
+    <div class="color-box">
+        <button onclick="changeBackground('black')">Black</button>
+        <button onclick="changeBackground('darkblue')">Dark Blue</button>
+        <button onclick="changeBackground('darkred')">Dark Red</button>
+        <button onclick="changeBackground('darkgreen')">Dark Green</button>
+    </div>
+
+    <!-- Terminal Simulation -->
+    <div class="terminal color-transition" id="terminal">
+        <div class="terminal-content" id="terminal-content">
+            <div>Welcome to the Interactive Terminal. Type 'help' to get started.</div>
+        </div>
+        <div class="terminal-input">
+            <span>user@web:~$</span>&nbsp;
+            <input type="text" id="input-box" class="input-box" autofocus onkeydown="handleCommand(event)">
+        </div>
+    </div>
+
+    <!-- Time Counter -->
+    <div class="time-counter" id="time-counter">Time on page: 0s</div>
+
+    <script>
+        let timeCounter = 0;
+        const terminalContent = document.getElementById('terminal-content');
+        const inputBox = document.getElementById('input-box');
+
+        // Start the time counter when the page is loaded
+        const startTimeCounter = () => {
+            setInterval(() => {
+                timeCounter++;
+                document.getElementById('time-counter').textContent = `Time on page: ${timeCounter}s`;
+            }, 1000);
+        }
+        window.onload = startTimeCounter;
+
+        // Handle user input
+        function handleCommand(event) {
+            if (event.key === 'Enter') {
+                const userCommand = inputBox.value.trim();
+                if (userCommand === '') return;
+
+                // Append the command to the terminal
+                appendToTerminal(`user@web:~$ ${userCommand}`);
+
+                // Process the command
+                processCommand(userCommand);
+
+                // Clear input
+                inputBox.value = '';
+            }
+        }
+
+        // Append to terminal content
+        function appendToTerminal(text) {
+            const newLine = document.createElement('div');
+            newLine.textContent = text;
+            terminalContent.appendChild(newLine);
+            terminalContent.scrollTop = terminalContent.scrollHeight;  // Auto-scroll
+        }
+
+        // Handle basic commands
+        function processCommand(command) {
+            command = command.toLowerCase();
+            let response = '';
+            switch (command) {
+                case 'help':
+                    response = "Available commands:\n - help: Show available commands\n - clear: Clear the terminal\n - date: Show the current date";
+                    break;
+                case 'clear':
+                    terminalContent.innerHTML = '';  // Clear terminal content
+                    return;
+                case 'date':
+                    response = `Current date and time: ${new Date().toLocaleString()}`;
+                    break;
+                default:
+                    response = `Command not found: ${command}`;
+            }
+            appendToTerminal(response);
+        }
+
+        // Change background color
+        function changeBackground(color) {
+            document.getElementById('terminal').style.backgroundColor = color;
+        }
+    </script>
+</body>
+</html>

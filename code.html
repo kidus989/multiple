@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Code Editor</title>
+    <style>
+        /* Basic Reset and Full-Screen Setup */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        /* Dark and Light Mode Colors */
+        body.light-mode {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            color: #f5f5f5;
+        }
+
+        /* Navbar styling */
+        .navbar {
+            width: 100%;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            animation: slideDown 1s ease-in-out;
+        }
+
+        .navbar a {
+            margin: 0 15px;
+            color: #f5f5f5;
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        .navbar a:hover {
+            color: #ffd700;
+        }
+
+        /* Animation for Navbar */
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        /* Toggle Button */
+        .toggle-btn {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            cursor: pointer;
+            padding: 10px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: #f5f5f5;
+            transition: background-color 0.5s;
+        }
+
+        .toggle-btn:hover {
+            background-color: #ffd700;
+        }
+
+        /* Container styling */
+        .container {
+            display: flex;
+            width: 90%;
+            height: 80%;
+            margin-top: 20px;
+            gap: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* Editor and Display styling */
+        .editor, .live-display {
+            width: 50%;
+            padding: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(8px);
+            transition: background-color 0.5s, box-shadow 0.5s;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100%;
+            padding: 15px;
+            font-size: 16px;
+            border: none;
+            background: transparent;
+            color: inherit;
+            resize: none;
+            outline: none;
+        }
+
+        /* Live display box styling */
+        .live-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: inherit;
+        }
+
+        /* Animation Keyframes */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="light-mode">
+    <!-- Dark Mode Toggle Button -->
+    <button class="toggle-btn" onclick="toggleDarkMode()">Switch to Dark Mode</button>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <a href="main page.html">Home</a>
+        <a href="code.html">Code</a>
+        <a href="note.html">Notes</a>
+        <a href="extrack.html">Extract</a>
+        <a href="frontpage.html">Back</a>
+    </div>
+
+    <!-- Code Editor and Live Display -->
+    <div class="container">
+        <!-- Code Editor Section -->
+        <div class="editor">
+            <h2>Code Editor</h2>
+            <textarea id="codeEditor" placeholder="Type your HTML code here..."></textarea>
+        </div>
+
+        <!-- Live Display Section -->
+        <div class="live-display" id="liveDisplay">
+            <h2>Live Display</h2>
+            <div id="displayContent">Your output will display here...</div>
+        </div>
+    </div>
+
+    <script>
+        // Dark and Light Mode Toggle
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            document.body.classList.toggle('light-mode');
+            const btn = document.querySelector('.toggle-btn');
+            btn.textContent = document.body.classList.contains('dark-mode') ? "Switch to Light Mode" : "Switch to Dark Mode";
+        }
+
+        // Live Code Display Update
+        const codeEditor = document.getElementById('codeEditor');
+        const displayContent = document.getElementById('displayContent');
+
+        codeEditor.addEventListener('input', () => {
+            displayContent.innerHTML = codeEditor.value;
+        });
+    </script>
+</body>
+</html>

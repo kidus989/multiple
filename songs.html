@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password</title>
+    <style>
+        body{
+            background:#000135fb;
+            background-size: 100%;
+            background-position: 100%;
+            margin: 0%;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, Helvetica, sans-serif;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            flex-wrap: wrap;
+            height: 100vh;
+        }
+        .circle{
+            background-color: #aca6a6c2;
+            border: 2px solid transparent;
+            backdrop-filter: blured;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            position: absolute;
+            top: 50px;
+            right: 31rem;
+        }
+        .circle2{
+            background-color: #a7a7adfb;
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            position: absolute;
+            top: 16px;
+            right: 67px;
+        }
+        .circle3{
+            background-color: #a7a7adfb;
+            width: 95px;
+            height: 50px;
+            border-radius: 35px;
+            position: absolute;
+            top: 95px;
+            right: 55px;
+        }
+        input[type="password"] {
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid gray;
+            color: green;
+           
+        }
+
+        button {
+            padding: 4px;
+            font-size: 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: transparent;
+            font-size: 15px;
+            color: green;
+            cursor: pointer;
+            width: 100%;
+            
+        }
+        button:hover {
+            background-color: #000135fb;
+            color: #a7a7adfb;
+        }
+        #error-message {
+            color: red;
+            margin-top: 10px;
+            display: none;
+        }
+        .login-container{
+            background-color: transparent;
+            border: 2px solid green;
+            padding: 45px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px green;
+            text-align: center;
+            color: green;
+            display: flex;
+        }
+        .box{
+            width: 240x;
+            height: 240px;
+            background-image: url(276412.jpg);
+            background-size: 100%;
+            border-radius: 50%;
+            position: absolute;
+            top: 335px;
+            left: 3rem;
+            box-shadow: 0 0 16px #0018a0;
+        }
+        .box2{
+            width: 240x;
+            height: 240px;
+            background-image: url(276412.jpg);
+            background-size: 100%;
+            border-radius: 50%;
+            position: absolute;
+            top: 335px;
+            right: 3rem;
+            box-shadow: 0 0 16px #0018a0;
+        }
+    </style>
+</head>
+<body>
+    <div class="circle">
+        <div class="circle2"></div>
+       <div class="circle3"></div>
+    </div>
+    <div class="">
+        <input type="password" id="password" placeholder="Password" style="background-color: transparent; border: 2px solid green; box-shadow: 0 0 5px green;">
+        <button onclick="checkPassword()">Submit</button>
+        <p id="error-message">Incorrect password. Please try again.</p>
+
+    </div>
+        <div class="box"></div>
+        <div class="box2"></div>
+    <script>
+        function checkPassword() {
+            const correctPassword = "kidus4291kidus4291";
+            const enteredPassword = document.getElementById("password").value;
+            const errorMessage = document.getElementById("error-message");
+
+            if (enteredPassword === correctPassword) {
+                window.location.href = "main page.html"; 
+            } else {
+                errorMessage.style.display = "block"; 
+            }
+        }
+    </script>
+</body>
+</html>

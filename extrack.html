@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image to Text Extract</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #0f0c29, #24243e);
+            color: #f0f0f0;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #f39c12;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+            animation: fadeInDown 1s ease-in-out;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            animation: slideIn 1.2s ease-in-out;
+        }
+
+        .upload-btn-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            border: none;
+            color: #fff;
+            background-color: #e74c3c;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease-in-out;
+            box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3);
+        }
+
+        .btn:hover {
+            background-color: #c0392b;
+            box-shadow: 0 6px 15px rgba(192, 57, 43, 0.5);
+        }
+
+        #output {
+            margin-top: 20px;
+            white-space: pre-wrap;
+            padding: 15px;
+            background-color: #2c3e50;
+            border-radius: 8px;
+            font-family: 'Courier New', Courier, monospace;
+            color: #ecf0f1;
+            animation: fadeIn 1.2s ease-in-out;
+            box-shadow: 0 0 10px rgba(44, 62, 80, 0.5);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #savedFiles {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            animation: fadeIn 1.5s ease-in-out;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        }
+
+        #progress {
+            margin-top: 10px;
+            width: 100%;
+            background-color: #ccc;
+        }
+
+        #progressBar {
+            width: 0%;
+            height: 24px;
+            background-color: #76c7c0;
+            text-align: center;
+            line-height: 24px;
+            color: white;
+        }
+
+        h2 {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 300;
+            text-align: center;
+        }
+
+        .horizontal {
+            border: 1px solid #f39c12;
+            margin-top: 30px;
+            animation: slideIn 1.5s ease-in-out;
+        }
+
+        .box {
+            background-color: transparent;
+            padding: 10px 0;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        a {
+            color: #f39c12;
+            text-decoration: none;
+            font-size: 18px;
+            margin: 0 15px;
+            transition: color 0.3s ease, background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #f39c12;
+            color: #24243e;
+            padding: 5px 10px;
+            border-radius: 8px;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <p style="color: #f39c12; position: absolute; top: 5px; font-family: Arial, Helvetica, sans-serif; font-size: 22px;">Multiple Linux</p>
+    <h1>Image to Text Extract</h1>
+
+    <div class="box">
+        <a href="main page.html">Home</a> |
+        <a href="code.html">Code</a> |
+        <a href="note.html">Note</a> |
+        <a href="extrack.html">Extract</a> |
+        <a href="frontpage.html">Back</a>
+    </div>
+
+    <hr class="horizontal">
+
+    <div class="container">
+        <div class="upload-btn-wrapper">
+            <button class="btn">Upload Image</button>
+            <input type="file" id="fileInput" accept="image/*">
+        </div>
+        <div id="loading" class="hidden">Processing image, please wait...</div>
+        <div id="progress" class="hidden">
+            <div id="progressBar">0%</div>
+        </div>
+        <div id="output" class="hidden"></div>
+        <button id="saveTextBtn" class="btn hidden">Download Extracted Text</button>
+        <a id="downloadLink" class="hidden"></a>
+        <div id="savedFiles">
+            <h2>Saved Files</h2>
+            <ul id="fileList"></ul>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4.1.1/dist/tesseract.min.js"></script>
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const output = document.getElementById('output');
+        const loading = document.getElementById('loading');
+        const saveTextBtn = document.getElementById('saveTextBtn');
+        const downloadLink = document.getElementById('downloadLink');
+        const progressBar = document.getElementById('progressBar');
+        const progress = document.getElementById('progress');
+
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                processImage(file);
+            }
+        });
+
+        saveTextBtn.addEventListener('click', saveExtractedText);
+
+        function processImage(file) {
+            loading.classList.remove('hidden');
+            progress.classList.remove('hidden');
+            output.classList.add('hidden');
+            saveTextBtn.classList.add('hidden');
+
+            const reader = new FileReader();
+            reader.onload = () => {
+                Tesseract.recognize(reader.result, 'eng', {
+                    logger: ({ status, progress }) => {
+                        if (status === 'recognizing text') {
+                            progressBar.style.width = Math.round(progress * 100) + '%';
+                            progressBar.textContent = Math.round(progress * 100) + '%';
+                        }
+                    }
+                }).then(({ data: { text } }) => {
+                    loading.classList.add('hidden');
+                    progress.classList.add('hidden');
+                    output.textContent = text;
+                    output.classList.remove('hidden');
+                    saveTextBtn.classList.remove('hidden');
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function saveExtractedText() {
+            const text = output.textContent;
+            const filename = 'extracted-text-' + new Date().toISOString().replace(/:/g, '-') + '.txt';
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+
+            downloadLink.href = url;
+            downloadLink.download = filename;
+            downloadLink.click();
+        }
+    </script>
+
+</body>
+
+</html>

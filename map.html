@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Geolocation Finder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px 0;
+            width: calc(100% - 24px);
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .result p {
+            margin: 10px 0;
+            color: #555;
+        }
+        .result p strong {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>IP Geolocation Finder</h1>
+        <input type="text" id="ipAddress" placeholder="Enter IP Address">
+        <button onclick="getLocation()">Get Location</button>
+        <div id="results" class="result"></div>
+    </div>
+
+    <script>
+        async function getLocation() {
+            const ipAddress = document.getElementById('ipAddress').value;
+            const resultsDiv = document.getElementById('results');
+
+            if (!ipAddress) {
+                resultsDiv.innerHTML = '<p style="color: red;">Please enter an IP address.</p>';
+                return;
+            }
+
+            const apiKey = 'YOUR_API_KEY'; // Replace with your API key
+            const url = `https://api.ipgeolocation.io/ipgeo?apiKey=${apiKey}&ip=${ipAddress}`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+
+                if (data.error) {
+                    resultsDiv.innerHTML = `<p style="color: red;">Error: ${data.error.message}</p>`;
+                } else {
+                    resultsDiv.innerHTML = `
+                        <h2>Location Information:</h2>
+                        <p><strong>IP:</strong> ${data.ip}</p>
+                        <p><strong>Country:</strong> ${data.country_name}</p>
+                        <p><strong>State:</strong> ${data.state_prov}</p>
+                        <p><strong>City:</strong> ${data.city}</p>
+                        <p><strong>Zip Code:</strong> ${data.zipcode}</p>
+                        <p><strong>Latitude:</strong> ${data.latitude}</p>
+                        <p><strong>Longitude:</strong> ${data.longitude}</p>
+                    `;
+                }
+            } catch (error) {
+                resultsDiv.innerHTML = `<p style="color: red;">An error occurred: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>
